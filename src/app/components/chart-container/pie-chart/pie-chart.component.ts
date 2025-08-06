@@ -76,6 +76,10 @@ export class PieChartComponent implements OnChanges, AfterViewInit, OnDestroy {
 
     const values = this.formatterOptions?.values ?? [];
     const tooltipEnabled = this.formatterOptions?.tooltip ?? true;
+    // Force-hide tooltip when disabled
+    if (!tooltipEnabled && this.tooltip) {
+      this.tooltip.style('display', 'none').style('opacity', '0');
+    }
     const showLegend = this.formatterOptions?.legend ?? true;
 
     const processedData: ChartDataItem[] = values.map((v, i) => ({
@@ -103,14 +107,28 @@ export class PieChartComponent implements OnChanges, AfterViewInit, OnDestroy {
           .style('opacity', '1')
           .html(`<strong>${d.data.label}:</strong> ${d.data.value}`);
       })
-      .on('mousemove', (event) => {
+    .on('mouseover', (event, d) => {
+      if (!tooltipEnabled) return;
+
+      const [x, y] = arc.centroid(d);
+      const chart = this.chartGroup.node()?.getBoundingClientRect();
+      if (chart) {
         this.tooltip
-          ?.style('left', event.pageX + 10 + 'px')
-          .style('top', event.pageY - 20 + 'px');
-      })
-      .on('mouseout', () => {
-        this.tooltip?.style('display', 'none').style('opacity', '0');
-      });
+          ?.style('display', 'block')
+          .style('opacity', '1')
+          .style('left', `${chart.left + x + window.scrollX}px`)
+          .style('top', `${chart.top + y + 30 + window.scrollY}px`) // ✅ Add vertical offset
+          .html(`<strong>${d.data.label}:</strong> ${d.data.value}`);
+      }
+    })
+    .on('mouseout', () => {
+      this.tooltip?.style('display', 'none').style('opacity', '0');
+    });
+
+
+      // .on('mouseout', () => {
+      //   this.tooltip?.style('display', 'none').style('opacity', '0');
+      // });
 
     if (showLegend) {
       const legendContainer = d3.select('#legend');

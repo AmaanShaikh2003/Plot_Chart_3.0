@@ -4,13 +4,13 @@
   <div *ngIf="chartType === 'pie'">
     <div class="formatter-control">
       <label for="tooltip">Tooltip:</label>
-      <button
-        id="tooltip"
-        (click)="toggleTooltip()"
-        [ngClass]="{ 'enabled': formatterOptions.tooltip, 'disabled': !formatterOptions.tooltip }"
-      >
-        {{ formatterOptions.tooltip ? 'Enabled' : 'Disabled' }}
-      </button>
+    <button
+      id="tooltipToggle" 
+      (click)="toggleTooltip()"
+      [ngClass]="{ 'enabled': formatterOptions.tooltip, 'disabled': !formatterOptions.tooltip }"
+    >
+      {{ formatterOptions.tooltip ? 'Enabled' : 'Disabled' }}
+    </button>
     </div>
 
     <div class="formatter-control">
