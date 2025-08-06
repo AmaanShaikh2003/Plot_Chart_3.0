@@ -1,0 +1,8 @@
+<div class="selector-wrapper">
+  <label for="chartType">Select Chart:</label>
+  <select [(ngModel)]="chartType" (change)="onChartTypeChange()" id="chartType">
+    <option value="none">None</option>
+    <option value="pie">Pie</option>
+    <option value="bar">Bar</option>
+  </select>
+</div>

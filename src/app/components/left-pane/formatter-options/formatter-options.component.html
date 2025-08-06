@@ -1,0 +1,86 @@
+<div class="formatters-panel" *ngIf="chartType !== 'none'">
+
+  <!-- PIE CHART FORMATTERS -->
+  <div *ngIf="chartType === 'pie'">
+    <div class="formatter-control">
+      <label for="tooltip">Tooltip:</label>
+      <button
+        id="tooltip"
+        (click)="toggleTooltip()"
+        [ngClass]="{ 'enabled': formatterOptions.tooltip, 'disabled': !formatterOptions.tooltip }"
+      >
+        {{ formatterOptions.tooltip ? 'Enabled' : 'Disabled' }}
+      </button>
+    </div>
+
+    <div class="formatter-control">
+      <label for="legend">Legend:</label>
+      <button
+        id="legend"
+        (click)="toggleLegend()"
+        [ngClass]="{ 'enabled': formatterOptions.legend, 'disabled': !formatterOptions.legend }"
+      >
+        {{ formatterOptions.legend ? 'Enabled' : 'Disabled' }}
+      </button>
+    </div>
+
+    <div class="formatter-control">
+      <label for="radius">Radius:</label>
+      <input
+        #radiusInput
+        id="radius"
+        type="number"
+        min="10"
+        max="500"
+        [value]="formatterOptions.radius"
+        (input)="onRadiusChange(radiusInput.value)"
+        autocomplete="off"
+      />
+    </div>
+  </div>
+
+  <!-- BAR CHART FORMATTERS -->
+  <div *ngIf="chartType === 'bar'">
+    <div class="formatter-control">
+      <label for="barWidth">Bar Width:</label>
+      <input
+        #barWidthInput
+        id="barWidth"
+        type="number"
+        min="1"
+        max="300"
+        [value]="formatterOptions.barWidth"
+        (input)="onBarWidthChange(barWidthInput.value)"
+        autocomplete="off"
+      />
+    </div>
+
+    <div class="formatter-control">
+      <label for="barHeight">Bar Height:</label>
+      <input
+        #barHeightInput
+        id="barHeight"
+        type="number"
+        min="1"
+        max="500"
+        [value]="formatterOptions.barHeight"
+        (input)="onBarHeightChange(barHeightInput.value)"
+        autocomplete="off"
+      />
+    </div>
+  </div>
+
+  <!-- COMMON VALUES INPUT -->
+  <div class="formatter-control">
+    <label for="values">Values:</label>
+    <input
+      #valuesInput
+      id="values"
+      type="text"
+      [value]="getValuesAsString()"
+      (input)="onValuesChange(valuesInput.value)"
+      autocomplete="off"
+    />
+  </div>
+
+</div>

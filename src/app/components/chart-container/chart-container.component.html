@@ -1,0 +1,13 @@
+<div *ngIf="chartType === 'pie'">
+  <app-pie-chart
+    [data]="formatterOptions.data"
+    [formatterOptions]="formatterOptions">
+  </app-pie-chart>
+</div>
+
+<div *ngIf="chartType === 'bar'">
+  <app-bar-chart
+    [data]="formatterOptions.data"
+    [formatterOptions]="formatterOptions">
+  </app-bar-chart>
+</div>

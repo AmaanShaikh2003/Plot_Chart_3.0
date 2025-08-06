@@ -1,0 +1,42 @@
+.formatters-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.formatter-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.formatter-control label {
+  min-width: 100px;
+  font-weight: bold;
+}
+
+input[type="number"],
+input[type="text"] {
+  padding: 0.25rem 0.5rem;
+  width: 200px;
+}
+
+button.enabled {
+  background-color: #4caf50;
+  color: white;
+}
+
+button.disabled {
+  background-color: #f44336;
+  color: white;
+}
+
+button {
+  border: none;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}

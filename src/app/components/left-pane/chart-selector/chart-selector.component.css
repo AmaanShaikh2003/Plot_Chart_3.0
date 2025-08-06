@@ -1,0 +1,13 @@
+.selector-wrapper {
+  margin-bottom: 10px;
+}
+
+label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+select {
+  padding: 5px;
+  border-radius: 4px;
+}

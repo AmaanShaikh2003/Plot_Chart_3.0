@@ -1,0 +1,74 @@
+.app-container {
+  display: flex;
+  height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.left-pane {
+  width: 300px;
+  padding: 20px;
+  background-color: #fafafa;
+  border-right: 1px solid #ddd;
+  overflow-y: auto;
+}
+
+.formatter-btn,
+.plot-btn {
+  padding: 10px 18px;
+  background: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.formatter-btn:hover,
+.plot-btn:hover {
+  background: #115293;
+}
+
+.formatter-panel {
+  margin-top: 15px;
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.right-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.plot-area {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 12px;
+}
+
+.chart-area {
+  flex: 1;
+  position: relative;
+  overflow: auto;
+  max-height: calc(100vh - 150px); /* adjust if needed */
+}
+
+.tooltip {
+  position: absolute;
+  display: none;
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+  padding: 6px 10px;
+  font-size: 13px;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 1000;
+  white-space: nowrap;
+}

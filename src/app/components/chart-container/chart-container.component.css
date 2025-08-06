@@ -1,0 +1,11 @@
+.right-pane {
+  width: 70%;
+  float: right;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+svg {
+  width: 100%;
+  height: 500px;
+}
