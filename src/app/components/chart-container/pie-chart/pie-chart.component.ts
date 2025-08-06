@@ -78,15 +78,6 @@ export class PieChartComponent implements OnChanges, AfterViewInit, OnDestroy {
     const svgWidth = 2 * radius + margin.left + margin.right;
     const svgHeight = 2 * radius + margin.top + margin.bottom;
 
-    if (this.formatterOptions?.title) {
-  this.svg.append('text')
-    .attr('x', svgWidth / 2)
-    .attr('y', 20)
-    .attr('text-anchor', 'middle')
-    .attr('class', 'chart-title')
-    .text(this.formatterOptions.title);
-}
-
     this.svg = d3.select(container)
       .append('svg')
       .attr('width', svgWidth)
@@ -143,20 +134,6 @@ export class PieChartComponent implements OnChanges, AfterViewInit, OnDestroy {
           .style('opacity', '1')
           .html(`<strong>${d.data.label}:</strong> ${d.data.value}`);
       })
-    .on('mouseover', (event, d) => {
-      if (!tooltipEnabled) return;
-
-      const [x, y] = arc.centroid(d);
-      const chart = this.chartGroup.node()?.getBoundingClientRect();
-      if (chart) {
-        this.tooltip
-          ?.style('display', 'block')
-          .style('opacity', '1')
-          .style('left', `${chart.left + x + window.scrollX}px`)
-          .style('top', `${chart.top + y + 30 + window.scrollY}px`) // ✅ Add vertical offset
-          .html(`<strong>${d.data.label}:</strong> ${d.data.value}`);
-      }
-    })
     .on('mouseout', () => {
       this.tooltip?.style('display', 'none').style('opacity', '0');
     });
