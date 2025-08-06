@@ -65,4 +65,9 @@ export class FormatterOptionsComponent {
   getValuesAsString(): string {
     return this.formatterOptions.values.map(v => v.value).join(', ');
   }
+
+  onTitleChange(value: string): void {
+  this.formatterOptions.title = value;
+  this.emitChange();
+}
 }

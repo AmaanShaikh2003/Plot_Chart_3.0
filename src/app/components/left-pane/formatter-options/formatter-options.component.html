@@ -82,5 +82,18 @@
       autocomplete="off"
     />
   </div>
+   <div class="formatter-control">
+<label for="chartTitle">Chart Title:</label>
+<input
+  id="chartTitle"
+  #titleInput
+  type="text"
+  [value]="formatterOptions.title || ''"
+  (input)="onTitleChange(titleInput.value)"
+  autocomplete="off"
+/>
+</div>
+
+
 
 </div>

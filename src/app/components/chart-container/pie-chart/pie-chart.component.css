@@ -5,17 +5,15 @@
   box-sizing: border-box;
 }
 
-/* .pie-wrapper {
+.pie-wrapper {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 24px;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
   padding: 20px;
-  height: 100%;
-  overflow: hidden;
+  box-sizing: border-box;
 }
- */
+
 .chart-wrapper {
   flex: 1;
   min-width: 300px;
@@ -25,8 +23,6 @@
   justify-content: center;
   align-items: center;
   overflow: auto;
-  background-color: #fff;
-  border: 1px solid #ddd;
   border-radius: 8px;
   position: relative;
 }
@@ -43,11 +39,16 @@
 }
 
 .legend-container {
-  width: 200px;
-  max-height: 600px;
-  overflow-y: auto;
-  padding-right: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  max-width: 100%;
+  padding: 10px;
+  border-top: 1px solid #eee;
+  margin-top: 10px;
 }
+
 
 .legend-item {
   display: flex;
@@ -78,4 +79,26 @@
   opacity: 0;
   transition: opacity 0.2s ease;
   z-index: 10;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  border-radius: 2px;
+  border: 1px solid #ccc;
+}
+
+.chart-title {
+  font-size: 18px;
+  font-family: 'Monospace', sans-serif;
+  fill: #333;
+  font-weight: bold;
 }

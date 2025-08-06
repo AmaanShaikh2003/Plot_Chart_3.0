@@ -7,6 +7,8 @@ import {
   ViewChild,
   AfterViewInit,
   OnDestroy,
+  Output,
+  EventEmitter
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as d3 from 'd3';
@@ -22,7 +24,17 @@ import { ChartDataItem, FormatterOptions } from '../../../types';
 export class PieChartComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() data: ChartDataItem[] = [];
   @Input() formatterOptions!: FormatterOptions;
+  @Output() formatterChange = new EventEmitter<FormatterOptions>();
   @ViewChild('pieContainer', { static: true }) pieContainer!: ElementRef<HTMLDivElement>;
+
+    toggleLegend(): void {
+    this.formatterOptions.legend = !this.formatterOptions.legend;
+    this.emitChange();
+  }
+
+    emitChange(): void {
+    this.formatterChange.emit({ ...this.formatterOptions });
+  }
 
   private svg!: d3.Selection<SVGSVGElement, unknown, null, undefined>;
   private chartGroup!: d3.Selection<SVGGElement, unknown, null, undefined>;
@@ -36,8 +48,8 @@ export class PieChartComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.observeResize();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if ((changes['formatterOptions'] || changes['data']) && this.pieContainer?.nativeElement) {
+  ngOnChanges(): void {
+    if (this.pieContainer?.nativeElement) {
       this.createChart();
     }
   }
@@ -56,18 +68,42 @@ export class PieChartComponent implements OnChanges, AfterViewInit, OnDestroy {
     const container = this.pieContainer.nativeElement;
     container.innerHTML = ''; // clear old chart
 
+
     const bounds = container.getBoundingClientRect();
     const fallbackRadius = 150;
     const radius = this.formatterOptions?.radius ?? fallbackRadius;
 
-    const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+    const margin = { top: 50, right: 20, bottom: 30, left: 40 };
+
     const svgWidth = 2 * radius + margin.left + margin.right;
     const svgHeight = 2 * radius + margin.top + margin.bottom;
+
+    if (this.formatterOptions?.title) {
+  this.svg.append('text')
+    .attr('x', svgWidth / 2)
+    .attr('y', 20)
+    .attr('text-anchor', 'middle')
+    .attr('class', 'chart-title')
+    .text(this.formatterOptions.title);
+}
 
     this.svg = d3.select(container)
       .append('svg')
       .attr('width', svgWidth)
       .attr('height', svgHeight);
+    
+      
+    const chartTitle = this.formatterOptions?.title ?? '';
+    if (chartTitle) {
+      this.svg.append('text')
+        .attr('x', svgWidth / 2)
+        .attr('y', margin.top / 2)
+        .attr('text-anchor', 'middle')
+        .attr('font-size', '18px')
+        .attr('font-family', 'Arial, sans-serif')
+        .attr('fill', '#333')
+        .text(chartTitle);
+    }
 
     this.chartGroup = this.svg.append('g')
       .attr('transform', `translate(${margin.left + radius}, ${margin.top + radius})`);
@@ -129,24 +165,24 @@ export class PieChartComponent implements OnChanges, AfterViewInit, OnDestroy {
       // .on('mouseout', () => {
       //   this.tooltip?.style('display', 'none').style('opacity', '0');
       // });
-
-    if (showLegend) {
       const legendContainer = d3.select('#legend');
-      legendContainer.selectAll('*').remove();
+      legendContainer.selectAll('*').remove(); // ✅ always clear previous legend
 
-      const legendItems = legendContainer
-        .selectAll('.legend-item')
-        .data(processedData)
-        .enter()
-        .append('div')
-        .attr('class', 'legend-item');
+      if (showLegend) {
+        const legendItems = legendContainer
+          .selectAll('.legend-item')
+          .data(processedData)
+          .enter()
+          .append('div')
+          .attr('class', 'legend-item');
 
-      legendItems.append('span')
-        .attr('class', 'legend-color')
-        .style('background-color', d => this.color(d.label));
+        legendItems.append('span')
+          .attr('class', 'legend-color')
+          .style('background-color', d => this.color(d.label));
 
-      legendItems.append('span')
-        .text(d => `${d.label}: ${d.value}`);
-    }
+        legendItems.append('span')
+          .text(d => `${d.label}: ${d.value}`);
+      }
+
   }
 }
